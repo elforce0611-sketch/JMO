@@ -331,14 +331,11 @@ button { font: inherit; cursor: pointer; }
 .showroom__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 5vw, 64px); align-items: center; }
 .showroom__visual {
   border-radius: var(--radius-lg); min-height: 440px; box-shadow: var(--shadow-md);
-  background: linear-gradient(150deg, #4a6242, #2e3a2c);
-  position: relative; overflow: hidden;
+  background: #2e3a2c; position: relative; overflow: hidden;
+  display: grid; grid-template-rows: 1fr 1fr; gap: 10px;
 }
-.showroom__visual::after {
-  content: ""; position: absolute; inset: 0;
-  background:
-    radial-gradient(70% 50% at 25% 18%, rgba(217,168,120,.45), transparent 60%),
-    radial-gradient(60% 60% at 85% 90%, rgba(174,186,161,.4), transparent 60%);
+.showroom__media {
+  width: 100%; height: 100%; object-fit: cover; display: block;
 }
 .info-list { margin: 26px 0 30px; display: grid; gap: 14px; }
 .info-list li { display: grid; grid-template-columns: 64px 1fr; gap: 14px; align-items: baseline; padding-bottom: 14px; border-bottom: 1px solid var(--line); }

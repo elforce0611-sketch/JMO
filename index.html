@@ -293,7 +293,12 @@
     <!-- 쇼룸 -->
     <section class="showroom section" id="showroom" aria-labelledby="showroom-title">
       <div class="container showroom__grid">
-        <div class="showroom__visual" data-tone="forest" aria-hidden="true"></div>
+        <div class="showroom__visual">
+          <video class="showroom__media" autoplay muted loop playsinline preload="metadata">
+            <source src="동영상제작/쇼룸1.mp4" type="video/mp4" />
+          </video>
+          <img class="showroom__media" src="동영상제작/쇼룸2.png" alt="soom 쇼룸 공간" loading="lazy" />
+        </div>
         <div class="showroom__text">
           <p class="eyebrow reveal">SHOWROOM</p>
           <h2 class="section__title reveal" id="showroom-title">직접 숨 쉬어 보는 공간</h2>
