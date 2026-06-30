@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>soom 숨 · 친환경 힐링 라이프 쇼룸</title>
+  <meta name="description" content="친환경 소재로 만든 가구와 천연 아로마·케어로 일상에 휴식을 더하는 힐링 라이프 쇼룸, soom 숨." />
+
+  <!-- 폰트 (인터넷 연결 시 적용, 미연결 시 시스템 폰트로 폴백) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+
+  <!-- 상단 공지 바 -->
+  <div class="topbar" role="region" aria-label="공지">
+    <div class="topbar__track" aria-hidden="false">
+      <span>친환경 소재 100%</span>
+      <span class="dot" aria-hidden="true"></span>
+      <span>5만원 이상 무료 배송</span>
+      <span class="dot" aria-hidden="true"></span>
+      <span>쇼룸 방문 예약 상시 운영</span>
+    </div>
+  </div>
+
+  <!-- 헤더 -->
+  <header class="nav" id="nav">
+    <div class="container nav__inner">
+      <a class="brand" href="#top" aria-label="soom 숨 홈으로">
+        <svg class="brand__mark" width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 21c0-5 0-8 0-8m0 0c-4 0-7-2.5-7-7 4 0 7 2.5 7 7Zm0 0c4 0 7-2.5 7-6.5-4 0-7 2-7 6.5Z"
+                stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="brand__name">soom<em>숨</em></span>
+      </a>
+
+      <nav class="nav__menu" aria-label="주 메뉴">
+        <a href="#story">브랜드 스토리</a>
+        <a href="#products">제품</a>
+        <a href="#showroom">쇼룸</a>
+        <a href="#journal">저널</a>
+      </nav>
+
+      <div class="nav__actions">
+        <a class="btn btn--ghost" href="#contact">문의</a>
+        <a class="btn btn--solid" href="#showroom">쇼룸 예약</a>
+      </div>
+
+      <button class="nav__toggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mobileMenu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <!-- 모바일 메뉴 -->
+    <div class="mobile-menu" id="mobileMenu" hidden>
+      <a href="#story">브랜드 스토리</a>
+      <a href="#products">제품</a>
+      <a href="#showroom">쇼룸</a>
+      <a href="#journal">저널</a>
+      <a href="#contact">문의</a>
+      <a class="btn btn--solid btn--block" href="#showroom">쇼룸 예약</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- 히어로: 메인 영상 -->
+    <section class="hero" id="top" aria-label="대표 영상">
+      <div class="hero__media">
+        <!-- 동영상제작 폴더의 영상을 메인 화면에 재생합니다. 없으면 아래 그라데이션이 보입니다. -->
+        <video class="hero__video" autoplay muted loop playsinline preload="metadata"
+               poster="동영상제작/Gemini_Generated_Image_nh6le1nh6le1nh6l.png">
+          <source src="동영상제작/Healing%20Light.mp4" type="video/mp4" />
+        </video>
+        <div class="hero__fallback" aria-hidden="true"></div>
+        <div class="hero__scrim" aria-hidden="true"></div>
+      </div>
+
+      <div class="container hero__content">
+        <p class="eyebrow eyebrow--light reveal">ECO · HEALING · LIVING</p>
+        <h1 class="hero__title reveal">
+          자연이 건네는 다정한 위로,<br /><span>당신의 공간이 됩니다</span>
+        </h1>
+        <p class="hero__sub reveal">
+          친환경 소재로 만든 가구와 천연 아로마·케어.<br />
+          숨이 머무는 공간에서 일상의 휴식을 다시 발견하세요.
+        </p>
+        <div class="hero__cta reveal">
+          <a class="btn btn--solid btn--lg" href="#products">제품 둘러보기</a>
+          <button class="btn btn--play" type="button" id="playStory" aria-label="브랜드 영상 재생">
+            <span class="btn__play-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </span>
+            브랜드 영상 보기
+          </button>
+        </div>
+      </div>
+
+      <a class="hero__scroll" href="#story" aria-label="아래로 스크롤">
+        <span></span>
+      </a>
+    </section>
+
+    <!-- 브랜드 스토리 / 고객 정보 -->
+    <section class="story section" id="story" aria-labelledby="story-title">
+      <div class="container story__grid">
+        <div class="story__text">
+          <p class="eyebrow reveal">WHY SOOM</p>
+          <h2 class="section__title reveal" id="story-title">
+            잘 쉬는 집은<br />좋은 소재에서 시작됩니다
+          </h2>
+          <p class="lead reveal">
+            soom은 ‘숨’이라는 말에서 시작했습니다. 매일 머무는 공간이 편안해야
+            삶도 깊게 숨 쉴 수 있다고 믿어요. 그래서 우리는 빠르게 소비되는 물건 대신,
+            오래 곁에 두고 쓸 수 있는 친환경 가구와 천연 케어를 만듭니다.
+          </p>
+          <p class="reveal">
+            FSC 인증 원목, 천연 오일 마감, 무독성 소이왁스와 식물성 원료.
+            눈에 보이지 않는 부분까지 자연에 가깝게. 그것이 숨이 일하는 방식입니다.
+          </p>
+          <a class="link-arrow reveal" href="#products">
+            제품 철학 자세히 보기
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+
+        <ul class="values reveal" aria-label="브랜드 가치">
+          <li class="value-card">
+            <span class="value-card__icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 3c4 3 6 6 6 10a6 6 0 1 1-12 0c0-4 2-7 6-10Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 21V11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </span>
+            <h3>친환경 소재</h3>
+            <p>인증 원목과 식물성 원료만 사용해 사람과 자연에 부담을 덜었습니다.</p>
+          </li>
+          <li class="value-card">
+            <span class="value-card__icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 19c3-1 5-3 6-6 1 3 3 5 6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 13c-1-4 0-7 3-9 1 4 0 7-3 9Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+            </span>
+            <h3>핸드메이드</h3>
+            <p>장인의 손에서 소량으로 완성해 하나하나의 결을 살립니다.</p>
+          </li>
+          <li class="value-card">
+            <span class="value-card__icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 21a9 9 0 1 0-9-9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 12l3 3 3-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <h3>지속가능</h3>
+            <p>재생 포장과 리필 프로그램으로 쓰레기를 줄이는 순환을 설계합니다.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 통계 -->
+    <section class="stats section" aria-label="브랜드 지표">
+      <div class="container stats__grid">
+        <div class="stat reveal"><strong data-count="100" data-suffix="%">0%</strong><span>자연 유래 원료</span></div>
+        <div class="stat reveal"><strong data-count="2400" data-suffix="+">0</strong><span>누적 단골 가족</span></div>
+        <div class="stat reveal"><strong data-count="48" data-suffix="">0</strong><span>핸드메이드 컬렉션</span></div>
+        <div class="stat reveal"><strong data-count="0" data-suffix="제로">0</strong><span>유해 화학 성분</span></div>
+      </div>
+    </section>
+
+    <!-- 제품 카드 -->
+    <section class="products section" id="products" aria-labelledby="products-title">
+      <div class="container">
+        <div class="section__head">
+          <div>
+            <p class="eyebrow reveal">COLLECTION</p>
+            <h2 class="section__title reveal" id="products-title">숨을 더하는 제품들</h2>
+          </div>
+          <p class="section__desc reveal">
+            리빙 가구부터 아로마, 데일리 케어까지. 자연에서 온 소재로 공간의 공기를 바꿉니다.
+          </p>
+        </div>
+
+        <div class="filters reveal" role="tablist" aria-label="제품 카테고리 필터">
+          <button class="chip is-active" role="tab" aria-selected="true" data-filter="all">전체</button>
+          <button class="chip" role="tab" aria-selected="false" data-filter="living">리빙</button>
+          <button class="chip" role="tab" aria-selected="false" data-filter="aroma">아로마</button>
+          <button class="chip" role="tab" aria-selected="false" data-filter="care">케어</button>
+        </div>
+
+        <ul class="card-grid" id="cardGrid">
+          <li class="product-card reveal" data-category="living">
+            <div class="product-card__media" data-tone="sage">
+              <span class="product-card__badge">BEST</span>
+            </div>
+            <div class="product-card__body">
+              <span class="product-card__cat">리빙 · 원목 가구</span>
+              <h3 class="product-card__name">오크 라운지 체어</h3>
+              <p class="product-card__desc">FSC 인증 오크와 천연 오일 마감. 오래 앉아도 편안한 곡선.</p>
+              <div class="product-card__foot">
+                <span class="price">₩ 389,000</span>
+                <a class="link-arrow" href="#contact">자세히 보기
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+              </div>
+            </div>
+          </li>
+
+          <li class="product-card reveal" data-category="living">
+            <div class="product-card__media" data-tone="clay"></div>
+            <div class="product-card__body">
+              <span class="product-card__cat">리빙 · 패브릭</span>
+              <h3 class="product-card__name">리넨 쿠션 커버</h3>
+              <p class="product-card__desc">100% 천연 리넨, 천연 염색. 계절에 따라 자연스럽게 길드는 색.</p>
+              <div class="product-card__foot">
+                <span class="price">₩ 42,000</span>
+                <a class="link-arrow" href="#contact">자세히 보기
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+              </div>
+            </div>
+          </li>
+
+          <li class="product-card reveal" data-category="aroma">
+            <div class="product-card__media" data-tone="forest">
+              <span class="product-card__badge">NEW</span>
+            </div>
+            <div class="product-card__body">
+              <span class="product-card__cat">아로마 · 디퓨저</span>
+              <h3 class="product-card__name">시그니처 디퓨저 ‘숲’</h3>
+              <p class="product-card__desc">편백과 삼나무 천연 오일. 방 안에 들이는 작은 숲의 공기.</p>
+              <div class="product-card__foot">
+                <span class="price">₩ 58,000</span>
+                <a class="link-arrow" href="#contact">자세히 보기
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+              </div>
+            </div>
+          </li>
+
+          <li class="product-card reveal" data-category="aroma">
+            <div class="product-card__media" data-tone="mist"></div>
+            <div class="product-card__body">
+              <span class="product-card__cat">아로마 · 캔들</span>
+              <h3 class="product-card__name">소이 캔들 ‘안개’</h3>
+              <p class="product-card__desc">무독성 소이왁스와 우드심지. 잔잔하게 번지는 머스크 향.</p>
+              <div class="product-card__foot">
+                <span class="price">₩ 34,000</span>
+                <a class="link-arrow" href="#contact">자세히 보기
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+              </div>
+            </div>
+          </li>
+
+          <li class="product-card reveal" data-category="care">
+            <div class="product-card__media" data-tone="cream"></div>
+            <div class="product-card__body">
+              <span class="product-card__cat">케어 · 핸드</span>
+              <h3 class="product-card__name">천연 핸드 밤</h3>
+              <p class="product-card__desc">시어버터와 카렌듈라. 물 쓰는 손에 오래 머무는 보습.</p>
+              <div class="product-card__foot">
+                <span class="price">₩ 19,000</span>
+                <a class="link-arrow" href="#contact">자세히 보기
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+              </div>
+            </div>
+          </li>
+
+          <li class="product-card reveal" data-category="living">
+            <div class="product-card__media" data-tone="wood"></div>
+            <div class="product-card__body">
+              <span class="product-card__cat">리빙 · 소품</span>
+              <h3 class="product-card__name">라탄 우드 트레이</h3>
+              <p class="product-card__desc">손으로 엮은 라탄과 원목. 찻자리와 디퓨저를 위한 자리.</p>
+              <div class="product-card__foot">
+                <span class="price">₩ 28,000</span>
+                <a class="link-arrow" href="#contact">자세히 보기
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 쇼룸 -->
+    <section class="showroom section" id="showroom" aria-labelledby="showroom-title">
+      <div class="container showroom__grid">
+        <div class="showroom__visual" data-tone="forest" aria-hidden="true"></div>
+        <div class="showroom__text">
+          <p class="eyebrow reveal">SHOWROOM</p>
+          <h2 class="section__title reveal" id="showroom-title">직접 숨 쉬어 보는 공간</h2>
+          <p class="lead reveal">
+            화면 너머의 결과 향은 직접 만나야 압니다. 햇살이 드는 한옥 공간에서
+            가구의 질감과 아로마를 천천히 경험해 보세요.
+          </p>
+          <ul class="info-list reveal">
+            <li><span>주소</span><p>서울 종로구 자하문로 00, 1층 soom 쇼룸</p></li>
+            <li><span>운영</span><p>화–일 11:00–19:00 (월 휴무)</p></li>
+            <li><span>예약</span><p>방문 1일 전까지 온라인 예약 권장</p></li>
+          </ul>
+          <a class="btn btn--solid btn--lg reveal" href="#contact">방문 예약하기</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 저널 / 뉴스레터 -->
+    <section class="journal section" id="journal" aria-labelledby="journal-title">
+      <div class="container journal__inner">
+        <p class="eyebrow eyebrow--light reveal">JOURNAL</p>
+        <h2 class="section__title section__title--light reveal" id="journal-title">
+          느리게 사는 법, 메일함으로
+        </h2>
+        <p class="journal__desc reveal">
+          제철 살림 팁과 신상품 소식, 쇼룸 클래스 안내를 한 달에 한 번 정성껏 보내드려요.
+        </p>
+        <form class="subscribe reveal" id="subscribeForm" novalidate>
+          <label class="sr-only" for="email">이메일 주소</label>
+          <input type="email" id="email" name="email" placeholder="이메일 주소를 입력하세요"
+                 autocomplete="email" required />
+          <button class="btn btn--solid" type="submit">구독하기</button>
+          <p class="form-msg" id="formMsg" role="alert" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- 푸터 -->
+  <footer class="footer" id="contact">
+    <div class="container footer__grid">
+      <div class="footer__brand">
+        <span class="brand__name brand__name--lg">soom<em>숨</em></span>
+        <p>자연을 들이는 가장 부드러운 방법.<br />친환경 힐링 라이프 쇼룸.</p>
+      </div>
+      <div class="footer__col">
+        <h4>둘러보기</h4>
+        <a href="#story">브랜드 스토리</a>
+        <a href="#products">제품</a>
+        <a href="#showroom">쇼룸</a>
+        <a href="#journal">저널</a>
+      </div>
+      <div class="footer__col">
+        <h4>문의</h4>
+        <a href="tel:0212345678">02-1234-5678</a>
+        <a href="mailto:hello@soom.kr">hello@soom.kr</a>
+        <p>서울 종로구 자하문로 00</p>
+      </div>
+      <div class="footer__col">
+        <h4>소셜</h4>
+        <a href="#" aria-label="인스타그램">Instagram</a>
+        <a href="#" aria-label="유튜브">YouTube</a>
+        <a href="#" aria-label="네이버 블로그">Blog</a>
+      </div>
+    </div>
+    <div class="container footer__bottom">
+      <p>© 2026 soom 숨. All rights reserved.</p>
+      <div class="footer__bottom-links">
+        <a href="#">이용약관</a>
+        <a href="#">개인정보처리방침</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 영상 모달 -->
+  <div class="modal" id="storyModal" hidden>
+    <div class="modal__backdrop" data-close></div>
+    <div class="modal__dialog" role="dialog" aria-modal="true" aria-label="브랜드 영상">
+      <button class="modal__close" type="button" data-close aria-label="닫기">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+      <div class="modal__video">
+        <video id="modalVideo" controls playsinline preload="none" poster="동영상제작/Gemini_Generated_Image_nh6le1nh6le1nh6l.png">
+          <source src="동영상제작/Healing%20Light.mp4" type="video/mp4" />
+          브라우저가 영상을 지원하지 않습니다.
+        </video>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>
