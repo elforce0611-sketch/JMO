@@ -28,7 +28,7 @@ const MIME = {
 const server = http.createServer((req, res) => {
   try {
     let urlPath = decodeURIComponent(req.url.split("?")[0]);
-    if (urlPath === "/") urlPath = "/editor.html";
+    if (urlPath === "/") urlPath = "/index.html";
 
     // 경로 보안: ROOT 밖으로 못 나가게
     const filePath = path.join(ROOT, urlPath);
