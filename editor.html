@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>soom 숨 · 텍스트 편집기</title>
+<style>
+  :root{
+    --bg:#f4f2ec; --panel:#ffffff; --ink:#2c2f28; --muted:#7b8174;
+    --sage:#5b6b4f; --sage-d:#465239; --line:#e3e0d6; --accent:#8a9a78;
+    --warn:#b4642f;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.55;
+  }
+  .topbar{
+    position:sticky; top:0; z-index:20; background:var(--sage); color:#fff;
+    display:flex; align-items:center; gap:14px; padding:12px 20px;
+    box-shadow:0 2px 12px rgba(0,0,0,.08);
+  }
+  .topbar h1{font-size:16px; margin:0; font-weight:600; letter-spacing:.2px}
+  .topbar .sp{flex:1}
+  .topbar .status{font-size:13px; opacity:.92}
+  button{font-family:inherit; cursor:pointer; border:none; border-radius:10px;
+    font-size:14px; font-weight:600; padding:10px 16px; transition:.15s}
+  .btn-primary{background:#fff; color:var(--sage-d)}
+  .btn-primary:hover{background:#f0efe7}
+  .btn-save{background:var(--warn); color:#fff}
+  .btn-save:hover{filter:brightness(1.05)}
+  .btn-save:disabled{opacity:.4; cursor:not-allowed}
+  .btn-ghost{background:rgba(255,255,255,.15); color:#fff}
+  .btn-ghost:hover{background:rgba(255,255,255,.28)}
+  .wrap{max-width:920px; margin:0 auto; padding:24px 20px 120px}
+  .intro{background:var(--panel); border:1px solid var(--line); border-radius:16px;
+    padding:20px 22px; margin-bottom:22px}
+  .intro p{margin:6px 0; font-size:14px; color:var(--muted)}
+  .intro b{color:var(--ink)}
+  .toolbar{display:flex; gap:10px; align-items:center; margin:18px 0 10px; flex-wrap:wrap}
+  .search{flex:1; min-width:200px; border:1px solid var(--line); border-radius:10px;
+    padding:10px 14px; font-size:14px; background:#fff; color:var(--ink)}
+  .group{background:var(--panel); border:1px solid var(--line); border-radius:16px;
+    margin-bottom:16px; overflow:hidden}
+  .group__head{padding:14px 20px; background:#eef0e8; border-bottom:1px solid var(--line);
+    font-weight:700; font-size:14px; color:var(--sage-d); display:flex; align-items:center; gap:8px}
+  .group__head .cnt{font-weight:500; color:var(--muted); font-size:12px}
+  .field{padding:14px 20px; border-bottom:1px solid #f0eee6; display:grid;
+    grid-template-columns:140px 1fr; gap:14px; align-items:start}
+  .field:last-child{border-bottom:none}
+  .field__hint{font-size:12px; color:var(--muted); padding-top:9px; word-break:keep-all}
+  .field input[type=text], .field textarea{
+    width:100%; border:1px solid var(--line); border-radius:10px; padding:9px 12px;
+    font-family:inherit; font-size:14px; color:var(--ink); background:#fdfdfb; resize:vertical}
+  .field input:focus, .field textarea:focus{outline:2px solid var(--accent); border-color:transparent}
+  .field.changed input, .field.changed textarea{border-color:var(--warn); background:#fff7f0}
+  .empty{padding:60px 20px; text-align:center; color:var(--muted)}
+  .empty .big{font-size:18px; color:var(--ink); margin-bottom:8px; font-weight:600}
+  .hidden{display:none !important}
+  .toast{position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--sage-d); color:#fff; padding:14px 22px; border-radius:12px; font-size:14px;
+    box-shadow:0 8px 24px rgba(0,0,0,.2); opacity:0; pointer-events:none; transition:.25s; z-index:50}
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
+  .toast.err{background:var(--warn)}
+  @media(max-width:640px){ .field{grid-template-columns:1fr; gap:6px}
+    .field__hint{padding-top:0} }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <h1>🌿 soom 숨 — 텍스트 편집기</h1>
+    <span class="status" id="status">파일이 열리지 않음</span>
+    <span class="sp"></span>
+    <button class="btn-primary" id="openBtn">홈페이지 파일 열기</button>
+    <button class="btn-ghost" id="previewBtn">미리보기</button>
+    <button class="btn-save" id="saveBtn" disabled>저장 (덮어쓰기)</button>
+  </div>
+
+  <div class="wrap">
+    <div class="intro">
+      <p><b>사용법</b></p>
+      <p>1. <b>[홈페이지 파일 열기]</b>를 눌러 <code>index.html</code>을 선택하세요.</p>
+      <p>2. 아래에 홈페이지의 모든 텍스트가 항목별로 나타납니다. 원하는 내용을 직접 수정하세요.</p>
+      <p>3. <b>[저장]</b>을 누르면 <code>index.html</code> 파일에 바로 반영됩니다. 홈페이지 탭을 새로고침하면 확인할 수 있어요.</p>
+      <p style="color:var(--warn)">※ Chrome 또는 Edge 브라우저에서 사용하세요. (파일 직접 저장 기능 필요)</p>
+    </div>
+
+    <div class="toolbar hidden" id="toolbar">
+      <input class="search" id="search" type="text" placeholder="🔍 텍스트 검색…" />
+      <span class="status" id="changeCount" style="color:var(--muted)">변경 0개</span>
+    </div>
+
+    <div id="fields">
+      <div class="empty" id="emptyState">
+        <div class="big">아직 파일을 열지 않았습니다</div>
+        <div>위의 <b>[홈페이지 파일 열기]</b> 버튼을 눌러 시작하세요.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+  var fileHandle = null;
+  var doc = null;            // parsed Document
+  var textNodes = [];        // editable text nodes in document order
+  var specials = [];         // {get, set, hint, group}
+  var inputs = [];           // {el, apply, orig, field, search}
+
+  var $ = function(id){ return document.getElementById(id); };
+  var statusEl=$("status"), saveBtn=$("saveBtn"), openBtn=$("openBtn"),
+      previewBtn=$("previewBtn"), fieldsEl=$("fields"), toolbar=$("toolbar"),
+      searchEl=$("search"), changeCount=$("changeCount"), toast=$("toast");
+
+  function showToast(msg, isErr){
+    toast.textContent = msg; toast.className = "toast show" + (isErr?" err":"");
+    setTimeout(function(){ toast.className = "toast" + (isErr?" err":""); }, 2600);
+  }
+
+  // ---- 그룹(섹션) 한글 이름 ----
+  var GROUP_NAMES = {
+    "topbar":"📢 상단 공지바", "nav":"🧭 상단 메뉴", "top":"🎬 메인 히어로",
+    "story":"📖 브랜드 스토리", "products":"🛋 제품", "showroom":"🏡 쇼룸",
+    "journal":"✉ 저널 / 뉴스레터", "contact":"📌 푸터", "storyModal":"▶ 영상 모달"
+  };
+  function groupOf(node){
+    var el = node.parentElement;
+    while(el){
+      if(el.id && GROUP_NAMES[el.id]) return GROUP_NAMES[el.id];
+      if(el.classList){
+        if(el.classList.contains("topbar")) return GROUP_NAMES.topbar;
+        if(el.classList.contains("stats")) return "📊 통계 지표";
+        if(el.classList.contains("footer")) return GROUP_NAMES.contact;
+      }
+      el = el.parentElement;
+    }
+    return "기타";
+  }
+
+  // ---- 항목 종류 힌트 ----
+  function hintOf(node){
+    var el = node.parentElement; if(!el) return "텍스트";
+    var c = el.className || "";
+    if(/section__title|hero__title/.test(c)) return "제목";
+    if(/eyebrow/.test(c)) return "작은 라벨";
+    if(/product-card__name/.test(c)) return "제품명";
+    if(/product-card__desc/.test(c)) return "제품 설명";
+    if(/product-card__cat/.test(c)) return "제품 카테고리";
+    if(/product-card__badge/.test(c)) return "뱃지";
+    if(/price/.test(c)) return "가격";
+    if(/lead|journal__desc|section__desc/.test(c)) return "본문";
+    if(/btn/.test(c)) return "버튼";
+    if(/brand__name/.test(c)) return "브랜드명";
+    var tag = el.tagName.toLowerCase();
+    if(tag==="h1"||tag==="h2") return "제목";
+    if(tag==="h3"||tag==="h4") return "소제목";
+    if(tag==="a") return "링크";
+    if(tag==="span") return "텍스트";
+    if(tag==="p") return "본문";
+    if(tag==="li") return "목록";
+    if(tag==="strong") return "강조";
+    return tag;
+  }
+
+  // ---- 편집 대상 텍스트 노드 수집 ----
+  function collectTextNodes(documentEl){
+    var body = documentEl.body;
+    var out = [];
+    var walker = documentEl.createTreeWalker(body, NodeFilter.SHOW_TEXT, {
+      acceptNode: function(n){
+        if(!n.nodeValue || n.nodeValue.trim()==="") return NodeFilter.FILTER_REJECT;
+        var p = n.parentElement;
+        while(p){
+          var t = p.tagName;
+          if(t==="SCRIPT"||t==="STYLE"||t==="NOSCRIPT"||t==="SVG"||t==="svg") return NodeFilter.FILTER_REJECT;
+          p = p.parentElement;
+        }
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    var n; while((n = walker.nextNode())) out.push(n);
+    return out;
+  }
+
+  // ---- 특수 항목(머리말/메타/플레이스홀더) ----
+  function collectSpecials(documentEl){
+    var arr = [];
+    var titleEl = documentEl.querySelector("title");
+    if(titleEl) arr.push({hint:"브라우저 탭 제목", group:"⚙ 페이지 설정",
+      get:function(){return titleEl.textContent;}, set:function(v){titleEl.textContent=v;}});
+    var metaEl = documentEl.querySelector('meta[name="description"]');
+    if(metaEl) arr.push({hint:"검색 설명문(SEO)", group:"⚙ 페이지 설정",
+      get:function(){return metaEl.getAttribute("content");}, set:function(v){metaEl.setAttribute("content",v);}});
+    var emailEl = documentEl.querySelector("#email");
+    if(emailEl) arr.push({hint:"이메일 입력칸 안내문", group:"⚙ 페이지 설정",
+      get:function(){return emailEl.getAttribute("placeholder")||"";}, set:function(v){emailEl.setAttribute("placeholder",v);}});
+    return arr;
+  }
+
+  // ---- UI 구성 ----
+  function buildUI(){
+    fieldsEl.innerHTML = "";
+    inputs = [];
+    var groupsOrder = [];
+    var groupMap = {};
+    function ensureGroup(name){
+      if(!groupMap[name]){
+        var g = document.createElement("div"); g.className="group"; g.dataset.group=name;
+        var h = document.createElement("div"); h.className="group__head";
+        h.innerHTML = '<span>'+name+'</span> <span class="cnt"></span>';
+        g.appendChild(h);
+        fieldsEl.appendChild(g);
+        groupMap[name] = {el:g, count:0};
+        groupsOrder.push(name);
+      }
+      return groupMap[name];
+    }
+
+    function addField(group, hint, value, applyFn){
+      var g = ensureGroup(group);
+      var field = document.createElement("div"); field.className="field";
+      var hintEl = document.createElement("div"); hintEl.className="field__hint"; hintEl.textContent=hint;
+      var multiline = value.length > 48 || /\n/.test(value);
+      var input = multiline ? document.createElement("textarea") : document.createElement("input");
+      if(multiline){ input.rows = Math.min(6, Math.max(2, Math.ceil(value.length/46))); }
+      else { input.type="text"; }
+      input.value = value;
+      var orig = value;
+      input.addEventListener("input", function(){
+        if(input.value !== orig) field.classList.add("changed");
+        else field.classList.remove("changed");
+        updateChangeCount();
+      });
+      field.appendChild(hintEl); field.appendChild(input);
+      g.el.appendChild(field);
+      g.count++;
+      inputs.push({el:input, field:field, apply:applyFn, orig:orig, search:(value+" "+hint+" "+group).toLowerCase()});
+    }
+
+    // 특수 항목 먼저
+    specials.forEach(function(s){
+      addField(s.group, s.hint, s.get(), function(v){ s.set(v); });
+    });
+    // 본문 텍스트 노드
+    textNodes.forEach(function(node){
+      var g = groupOf(node);
+      var h = hintOf(node);
+      var val = node.nodeValue.replace(/\s+/g," ").trim();
+      addField(g, h, val, function(v){ node.nodeValue = v; });
+    });
+
+    // 그룹별 카운트 표시
+    groupsOrder.forEach(function(name){
+      var g = groupMap[name];
+      g.el.querySelector(".cnt").textContent = "("+g.count+"개)";
+    });
+
+    toolbar.classList.remove("hidden");
+    updateChangeCount();
+  }
+
+  function updateChangeCount(){
+    var n = 0;
+    inputs.forEach(function(it){ if(it.el.value !== it.orig) n++; });
+    changeCount.textContent = "변경 " + n + "개";
+    saveBtn.disabled = (!fileHandle);
+  }
+
+  // ---- 파일 열기 ----
+  async function openFile(){
+    if(!window.showOpenFilePicker){
+      showToast("이 브라우저는 지원하지 않습니다. Chrome/Edge를 사용하세요.", true); return;
+    }
+    try{
+      var handles = await window.showOpenFilePicker({
+        types:[{description:"HTML", accept:{"text/html":[".html",".htm"]}}]
+      });
+      fileHandle = handles[0];
+      await loadFromHandle();
+    }catch(e){ if(e.name!=="AbortError") showToast("열기 실패: "+e.message, true); }
+  }
+
+  async function loadFromHandle(){
+    var file = await fileHandle.getFile();
+    var text = await file.text();
+    doc = new DOMParser().parseFromString(text, "text/html");
+    textNodes = collectTextNodes(doc);
+    specials = collectSpecials(doc);
+    var es = $("emptyState"); if(es) es.style.display="none";
+    statusEl.textContent = "열림: " + fileHandle.name;
+    buildUI();
+    showToast("파일을 불러왔습니다 (" + (textNodes.length+specials.length) + "개 텍스트)");
+  }
+
+  // ---- 저장 ----
+  async function saveFile(){
+    if(!fileHandle || !doc){ showToast("먼저 파일을 여세요.", true); return; }
+    try{
+      inputs.forEach(function(it){
+        if(it.el.value !== it.orig) it.apply(it.el.value);
+      });
+      var html = "<!DOCTYPE html>\n" + doc.documentElement.outerHTML + "\n";
+      var w = await fileHandle.createWritable();
+      await w.write(html);
+      await w.close();
+      inputs.forEach(function(it){ it.orig = it.el.value; it.field.classList.remove("changed"); });
+      updateChangeCount();
+      showToast("✅ 저장 완료! 홈페이지 탭을 새로고침하세요.");
+    }catch(e){ showToast("저장 실패: "+e.message, true); }
+  }
+
+  // ---- 미리보기 ----
+  function preview(){
+    if(fileHandle){ window.open("index.html","_blank"); }
+    else showToast("먼저 파일을 여세요.", true);
+  }
+
+  // ---- 검색 필터 ----
+  searchEl.addEventListener("input", function(){
+    var q = searchEl.value.toLowerCase().trim();
+    inputs.forEach(function(it){
+      it.field.style.display = (!q || it.search.indexOf(q)>=0 || it.el.value.toLowerCase().indexOf(q)>=0) ? "" : "none";
+    });
+    document.querySelectorAll(".group").forEach(function(g){
+      var any = g.querySelector(".field:not([style*='display: none'])");
+      g.style.display = any ? "" : "none";
+    });
+  });
+
+  openBtn.addEventListener("click", openFile);
+  saveBtn.addEventListener("click", saveFile);
+  previewBtn.addEventListener("click", preview);
+
+  document.addEventListener("keydown", function(e){
+    if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==="s"){ e.preventDefault(); saveFile(); }
+  });
+})();
+</script>
+</body>
+</html>
