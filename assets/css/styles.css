@@ -302,12 +302,17 @@ button { font: inherit; cursor: pointer; }
 .product-card__media[data-tone="mist"]   { background: linear-gradient(135deg, #c9cfc2, #97a48c); }
 .product-card__media[data-tone="cream"]  { background: linear-gradient(135deg, #f0e7d4, #ddc9a6); }
 .product-card__media[data-tone="wood"]   { background: linear-gradient(135deg, #c2a079, #8c6b48); }
+/* 카드 사진 */
+.product-card__img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; display: block; z-index: 0;
+}
 .product-card__media::after {
-  content: ""; position: absolute; inset: 0;
-  background: radial-gradient(120% 80% at 80% 10%, rgba(255,255,255,.28), transparent 55%);
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: radial-gradient(120% 80% at 80% 10%, rgba(255,255,255,.16), transparent 55%);
 }
 .product-card__badge {
-  position: absolute; top: 14px; left: 14px; z-index: 1;
+  position: absolute; top: 14px; left: 14px; z-index: 2;
   background: var(--clay); color: var(--white); font-size: 11.5px; font-weight: 700;
   letter-spacing: .08em; padding: 5px 10px; border-radius: 999px;
 }
